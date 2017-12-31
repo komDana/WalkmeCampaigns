@@ -1,0 +1,19 @@
+{
+  "name": "campaignapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "debug": "^3.1.0",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "tap": "^11.0.1"
+  }
+}

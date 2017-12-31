@@ -1,0 +1,21 @@
+{
+    "campaigns":[
+                    {
+                        "id": 101, 
+                        "name": "Holiday Specials", 
+                        "thresholds": { 
+                            "max_total": 1, 
+                            "max_per_user": 1
+                        },
+                        "data": {}
+                    },
+                    {
+                        "id": 102, 
+                        "name": "Rate this app", 
+                        "thresholds": { 
+                           "max_per_user": 3
+                        },
+                        "data": {}
+                    }              
+    ]
+}
