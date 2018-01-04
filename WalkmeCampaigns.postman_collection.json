@@ -1,0 +1,352 @@
+{
+	"info": {
+		"name": "WalkmeCampaigns",
+		"_postman_id": "b26e4eb5-53cb-0d19-b1f5-74733972af6a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set Prerequisites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22140e62-5782-4dad-b843-31d0ff2c5238",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "845fdcf4-fda3-4d0c-a260-573889b129b6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"count\", 1);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "https://postman-echo.com/status/200",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"status",
+						"200"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Campaigns for User1, should get all 3 campaigns",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd62c6d8-9282-4495-b51a-67652e75ce23",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var actualCampaigns = JSON.parse(responseBody);",
+							"",
+							"var expectedCampaigns = [{\"id\": 101, \"name\": \"Holiday Specials\",",
+							"                            \"thresholds\": {\"max_total\": 1000, \"max_per_user\": 10}, \"data\": {}},",
+							"                         {\"id\": 102, \"name\": \"Rate this app\", \"thresholds\": {\"max_per_user\": 3}, \"data\": {}},",
+							"                         {\"id\": 103, \"name\": \"First come first served\", \"thresholds\": {\"max_total\": 4}, \"data\": {}}];",
+							"                         ",
+							"tests[\"Returned 3 Campaigns\"] = actualCampaigns.length === expectedCampaigns.length;",
+							"for (var index = 0; index < actualCampaigns.length; index++)",
+							"{",
+							"    var actualCampaign = actualCampaigns[index];",
+							"    var expectedCampaign = expectedCampaigns[index];",
+							"    ",
+							"    tests[\"Campaign Ids are equal\"] = expectedCampaign.id === actualCampaign.id;",
+							"    tests[\"Campaign names are equal\"] = expectedCampaign.name === actualCampaign.name;",
+							"    tests[\"Campaign thresholds are equal\"] = (expectedCampaign.thresholds.max_per_user === actualCampaign.thresholds.max_per_user) && (expectedCampaign.thresholds.max_total === actualCampaign.thresholds.max_total);",
+							"    tests[\"Campaign data are equal\"] = expectedCampaign.data.length === actualCampaign.data.length;",
+							"}",
+							"",
+							"var counter = parseInt(pm.environment.get(\"count\"));",
+							"pm.environment.set(\"count\", counter + 1);",
+							"if(counter <= 2 ){",
+							"    postman.setNextRequest('Get Campaigns for User1, should get all 3 campaigns');",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3e6abf6b-da03-4ce6-a2d1-ad8feef1121b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{address}}:{{port}}/{{campaignsResource}}?user_id=1",
+					"protocol": "http",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{campaignsResource}}"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": "First get request for user 1.\nFirst get request, for restApi."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Campaigns for User2, should  get all 3 campaigns",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d94dde48-05e2-4cff-8c8f-f3038f5598f4",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var actualCampaigns = JSON.parse(responseBody);",
+							"",
+							"var expectedCampaigns = [{\"id\": 101, \"name\": \"Holiday Specials\",",
+							"                            \"thresholds\": {\"max_total\": 1000, \"max_per_user\": 10}, \"data\": {}},",
+							"                         {\"id\": 102, \"name\": \"Rate this app\", \"thresholds\": {\"max_per_user\": 3}, \"data\": {}},",
+							"                         {\"id\": 103, \"name\": \"First come first served\", \"thresholds\": {\"max_total\": 4}, \"data\": {}}];",
+							"",
+							"tests[\"Returned 3 Campaigns\"] = actualCampaigns.length === expectedCampaigns.length;",
+							"for (var index = 0; index < actualCampaigns.length; index++ )",
+							"{",
+							"    var actualCampaign = actualCampaigns[index];",
+							"    var expectedCampaign = expectedCampaigns[index];",
+							"    ",
+							"    tests[\"Campaign Ids are equal\"] = expectedCampaign.id === actualCampaign.id;",
+							"    tests[\"Campaign names are equal\"] = expectedCampaign.name === actualCampaign.name;",
+							"    tests[\"Campaign thresholds are equal\"] = (expectedCampaign.thresholds.max_per_user === actualCampaign.thresholds.max_per_user) && (expectedCampaign.thresholds.max_total === actualCampaign.thresholds.max_total);",
+							"    tests[\"Campaign data are equal\"] = expectedCampaign.data.length === actualCampaign.data.length;",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{address}}:{{port}}/{{campaignsResource}}?user_id=2",
+					"protocol": "http",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{campaignsResource}}"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "First get request for user 2.\nForth get request, for restApi.\nShould get all 3 campaigns"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Campaigns for User2, should get 2 campaigns",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3155d71-e317-4591-b333-3a9807994174",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var actualCampaigns = JSON.parse(responseBody);",
+							"",
+							"var expectedCampaigns = [{\"id\": 101, \"name\": \"Holiday Specials\",",
+							"                            \"thresholds\": {\"max_total\": 1000, \"max_per_user\": 10}, \"data\": {}},",
+							"                         {\"id\": 102, \"name\": \"Rate this app\", \"thresholds\": {\"max_per_user\": 3}, \"data\": {}}];",
+							"                 ",
+							"tests[\"Returned 2 Campaigns\"] = actualCampaigns.length === expectedCampaigns.length;",
+							"for (var index = 0; index < actualCampaigns.length; index ++)",
+							"{",
+							"    var actualCampaign = actualCampaigns[index];",
+							"    var expectedCampaign = expectedCampaigns[index];",
+							"    ",
+							"    tests[\"Campaign Ids are equal\"] = expectedCampaign.id === actualCampaign.id;",
+							"    tests[\"Campaign names are equal\"] = expectedCampaign.name === actualCampaign.name;",
+							"    tests[\"Campaign thresholds are equal\"] = (expectedCampaign.thresholds.max_per_user === actualCampaign.thresholds.max_per_user) && (expectedCampaign.thresholds.max_total === actualCampaign.thresholds.max_total);",
+							"    tests[\"Campaign data are equal\"] = expectedCampaign.data.length === actualCampaign.data.length;",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{address}}:{{port}}/{{campaignsResource}}?user_id=2",
+					"protocol": "http",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{campaignsResource}}"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "Second get request for user 2.\nFifth get request, for restApi.\nShould get 2 campaigns"
+			},
+			"response": []
+		},
+		{
+			"name": "Get request for user 1 , should get 1 campaign",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9cbff7f-d41c-4f5f-8337-b329a9f9f60c",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var actualCampaigns = JSON.parse(responseBody);",
+							"",
+							"var expectedCampaign = {\"id\": 101, \"name\": \"Holiday Specials\",",
+							"                            \"thresholds\": {\"max_total\": 1000, \"max_per_user\": 10}, \"data\": {}};",
+							"                         ",
+							"tests[\"Returned 1 Campaign\"] = actualCampaigns.length === expectedCampaigns.length;",
+							"",
+							"var actualCampaign = actualCampaigns[0];",
+							"",
+							"tests[\"Campaign Ids are equal\"] = expectedCampaign.id === actualCampaign.id;",
+							"tests[\"Campaign names are equal\"] = expectedCampaign.name === actualCampaign.name;",
+							"tests[\"Campaign thresholds are equal\"] = (expectedCampaign.thresholds.max_per_user === actualCampaign.thresholds.max_per_user) && (expectedCampaign.thresholds.max_total === actualCampaign.thresholds.max_total);",
+							"tests[\"Campaign data are equal\"] = expectedCampaign.data.length === actualCampaign.data.length;",
+							"",
+							"var counter = parseInt(pm.environment.get(\"count\"));",
+							"pm.environment.set(\"count\", counter + 1);",
+							"if(counter <= 9 ){",
+							"    postman.setNextRequest('Get request for user 1 , should get 1 campaign');",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{address}}:{{port}}/{{campaignsResource}}?user_id=1",
+					"protocol": "http",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{campaignsResource}}"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get campaign For user 1, no campaign returns.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d0be706-9b70-4a92-8bc0-a4cdd6d6076c",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var actualCampaigns = JSON.parse(responseBody);",
+							"                         ",
+							"tests[\"Returned 1 Campaign\"] = actualCampaigns.length === 0;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{address}}:{{port}}/{{campaignsResource}}?user_id=1",
+					"protocol": "http",
+					"host": [
+						"{{address}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{campaignsResource}}"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
